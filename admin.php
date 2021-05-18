@@ -346,7 +346,7 @@ class Input {
 
 		# What is our magic quotes setting?
 		if ( ! isset($magicQuotes) ) {
-			$magicQuotes = get_magic_quotes_gpc();
+			$magicQuotes = false;
 		}
 
 		# What type is this?

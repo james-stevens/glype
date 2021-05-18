@@ -653,11 +653,6 @@ if ( $options['allowCookies'] ) {
 
 if ( ! empty($_POST) ) {
 
-	# enable backward compatibility with cURL's @ option for uploading files in PHP 5.5 and 5.6
-	if (version_compare(PHP_VERSION, '5.5')>=0) {
-		$toSet[CURLOPT_SAFE_UPLOAD] = false;
-	}
-
 	# Attempt to get raw POST from the input wrapper
 	if ( ! ($tmp = file_get_contents('php://input')) ) {
 
@@ -904,7 +899,8 @@ class Request {
 
 		# Extract the status code (can occur more than once if 100 continue)
 		if ( $this->status == 0 || ( $this->status == 100 && ! strpos($header, ':') ) ) {
-			$this->status = substr($header, 9, 3);
+			if ( substr($header,0,8) == 'Status: ')
+				$this->status = intval(substr($header, 9, 3));
 		}
 
 		# Attempt to extract header name and value

@@ -885,6 +885,8 @@ function analyze_js($input, $start, $argPos = false) {
 	# Add , if looking for an argument position
 	if ( $argPos ) {
 		$currentArg = 1;
+	} else {
+		$currentArg = 0;
 	}
 
 	# Loop through the input, stopping only at special chars
